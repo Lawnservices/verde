@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Miguel Lawn Services</title>
+  <script src="https://unpkg.com/vue@3"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+    }
+
+    header {
+      background: green;
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 40px;
+    }
+
+    .btn {
+      background: yellow;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .contact {
+      margin-top: 20px;
+    }
+
+    input {
+      padding: 10px;
+      width: 200px;
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="app">
+
+  <!-- HEADER -->
+  <header>
+    <h1>{{ title }}</h1>
+    <p>{{ slogan }}</p>
+    <button class="btn" @click="scrollToContact">GET FREE ESTIMATE</button>
+  </header>
+
+  <!-- SERVICIOS -->
+  <section>
+    <h2>Our Services</h2>
+    <div class="services">
+      <div class="card" v-for="service in services">
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.price }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUE ELEGIRNOS -->
+  <section>
+    <h2>Why Choose Us?</h2>
+    <p>✔ Best prices in the area</p>
+    <p>✔ Fast and professional</p>
+    <p>✔ Free estimates</p>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact">
+      <input v-model="name" placeholder="Your name">
+      <input v-model="phone" placeholder="Phone number">
+      <br>
+      <button class="btn" @click="send">Send</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Miguel Lawn Services</p>
+  </footer>
+
+</div>
+
+<script>
+const { createApp } = Vue;
+
+createApp({
+  data() {
+    return {
+      title: 'Miguel Lawn Services',
+      slogan: 'THE BEST PRICES IN THE AREA',
+      name: '',
+      phone: '',
+      services: [
+        { name: 'Lawn Mowing', price: 'From $50' },
+        { name: 'Yard Clean-Up', price: 'From $100' },
+        { name: 'Mulch', price: 'From $120' },
+        { name: 'Bush Trimming', price: 'From $80' }
+      ]
+    }
+  },
+  methods: {
+    send() {
+      if (this.name && this.phone) {
+        alert('Thanks! We will contact you soon 👍');
+        this.name = '';
+        this.phone = '';
+      } else {
+        alert('Please fill all fields');
+      }
+    },
+    scrollToContact() {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}).mount('#app');
+</script>
+
+</body>
+</html>

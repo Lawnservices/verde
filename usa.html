@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Miguel Lawn Services</title>
+  <script src="https://unpkg.com/vue@3"></script>
+  <style>
+    body {
+      font-family: Arial;
+    }
+    #app {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+    }
+    .chat-box {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+      padding: 10px;
+    }
+    .messages {
+      height: 200px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    .message {
+      margin: 5px 0;
+    }
+    .user {
+      text-align: right;
+      color: blue;
+    }
+    .bot {
+      text-align: left;
+      color: green;
+    }
+    input {
+      width: 75%;
+      padding: 5px;
+    }
+    button {
+      width: 20%;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <div class="chat-box">
+    <div class="messages">
+      <div v-for="msg in messages" :class="['message', msg.type]">
+        {{ msg.text }}
+      </div>
+    </div>
+
+    <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Escribe..." />
+    <button @click="sendMessage">Enviar</button>
+  </div>
+</div>
+
+<script>
+const { createApp } = Vue;
+
+createApp({
+  data() {
+    return {
+      userInput: '',
+      messages: [
+        { text: 'Hola 👋 ¿En qué puedo ayudarte?', type: 'bot' }
+      ]
+    }
+  },
+  methods: {
+    sendMessage() {
+      if (this.userInput.trim() === '') return;
+
+      // Mensaje del usuario
+      this.messages.push({
+        text: this.userInput,
+        type: 'user'
+      });
+
+      // Respuesta automática simple
+      let response = 'Gracias por contactarnos 👍';
+
+      if (this.userInput.toLowerCase().includes('precio')) {
+        response = 'Nuestros precios empiezan desde $50 💰';
+      } else if (this.userInput.toLowerCase().includes('servicio')) {
+        response = 'Ofrecemos lawn mowing, limpieza, mulch y más 🌿';
+      } else if (this.userInput.toLowerCase().includes('contacto')) {
+        response = 'Puedes llamarnos o escribirnos por WhatsApp 📞';
+      }
+
+      setTimeout(() => {
+        this.messages.push({
+          text: response,
+          type: 'bot'
+        });
+      }, 500);
+
+      this.userInput = '';
+    }
+  }
+}).mount('#app');
+</script>
+
+</body>
+</html>
